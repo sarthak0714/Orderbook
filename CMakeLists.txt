@@ -6,11 +6,12 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
 add_executable(Orderbook 
+    src/main.cpp
     src/Order.cpp
     src/Trade.cpp
     src/Orderbook.cpp
-
- "src/main.h")
+    src/TradingEngine.cpp
+)
 
 target_include_directories(Orderbook PUBLIC 
     ${PROJECT_SOURCE_DIR}/src

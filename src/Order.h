@@ -1,31 +1,32 @@
 #pragma once
 #include <string>
+#include <stdexcept>
 
 enum class OrderType {
-	LIMIT,
-	MARKET
+    LIMIT,
+    MARKET
 };
 
 enum class OrderSide {
-	BUY,
-	SELL
+    BUY,
+    SELL
 };
 
 class Order {
 public:
-	Order(std::string id, OrderType type, OrderSide side, double price, int qty);
+    Order(std::string id, OrderType type, OrderSide side, double price, int quantity);
 
-	std::string getId() const { return id; }
-	OrderType getOrderType() const { return type; }
-	OrderSide getOrderSide() const { return side; }
-	double getOrderPrice() const { return price; }
-	int getQuantity() const { return qty; }
-	void reduceQuantity(int amt) { qty -= amt; }
+    std::string getId() const { return id; }
+    OrderType getType() const { return type; }
+    OrderSide getSide() const { return side; }
+    double getPrice() const { return price; }
+    int getQuantity() const { return quantity; }
+    void reduceQuantity(int amount);
 
 private:
-	std::string id;
-	OrderType type;
-	OrderSide side;
-	double price;
-	int qty;
+    std::string id;
+    OrderType type;
+    OrderSide side;
+    double price;
+    int quantity;
 };

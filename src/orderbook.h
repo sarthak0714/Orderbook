@@ -1,20 +1,24 @@
-#pragma once 
+#pragma once
 #include <map>
+#include <string>
 #include <vector>
-#include <functional>
-#include "Trade.h"
 #include "Order.h"
+#include "Trade.h"
 
 class Orderbook {
-private:
-	void addOrder(const Order& order);
-	void cancelOrder(const std::string& orderId);
-	std::vector<Trade> matchOrders();
-	void displayOrderBook() const;
+public:
+    void addOrder(const Order& order);
+    bool cancelOrder(const std::string& orderId);
+    std::vector<Trade> processOrder(const Order& order);
+    void displayOrderbook() const;
+    double getBestBid() const;
+    double getBestAsk() const;
 
 private:
-	std::multimap<double, Order, std::greater<double>> buyOrders;
-	std::multimap<double, Order, std::greater<double>> sellOrders;
+    std::multimap<double, Order, std::greater<double>> bids;
+    std::multimap<double, Order, std::less<double>> asks;
 
-
+    std::vector<Trade> processMarketOrder(const Order& order);
+    std::vector<Trade> processLimitOrder(const Order& order);
+    void addToOrderbook(const Order& order);
 };
