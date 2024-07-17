@@ -138,32 +138,48 @@ void Orderbook::addToOrderbook(const Order& order) {
 }
 
 void Orderbook::displayOrderbook() const {
-    std::cout << std::setw(15) << std::left << "Sell Orders:";
-    std::cout << std::setw(15) << std::left << "Buy Orders:" << std::endl;
+    const std::string RED_BG = "\033[41m";
+    const std::string GREEN_BG = "\033[42m";
+    const std::string BLUE_TEXT = "\033[34m";
+    const std::string WHITE_TEXT = "\033[37m";
+    const std::string BOLD_TEXT = "\033[1m";
+    const std::string RESET = "\033[0m";
+
+    const int width = 15;
+
+    std::cout << BOLD_TEXT << BLUE_TEXT << std::setw(width * 2) << std::setfill(' ') << " " << RESET << std::endl;
+    std::cout << BOLD_TEXT << BLUE_TEXT << std::setw(width) << std::left << "Sell Orders";
+    std::cout << std::setw(width) << std::left << "Buy Orders" << RESET << std::endl;
+    std::cout << BOLD_TEXT << BLUE_TEXT << std::setw(width * 2) << std::setfill(' ') << " " << RESET << std::endl;
 
     auto askIt = asks.begin();
     auto bidIt = bids.begin();
 
     while (askIt != asks.end() || bidIt != bids.end()) {
         if (askIt != asks.end()) {
-            std::cout << std::setw(7) << std::fixed << std::setprecision(2) << askIt->first
-                << " " << std::setw(7) << askIt->second.getQuantity();
+            std::cout << RED_BG << WHITE_TEXT
+                << std::setw(7) << std::fixed << std::setprecision(2) << askIt->first
+                << " " << std::setw(7) << askIt->second.getQuantity()
+                << RESET;
             ++askIt;
         }
         else {
-            std::cout << std::setw(15) << "";
+            std::cout << std::setw(width) << "";
         }
 
         if (bidIt != bids.end()) {
-            std::cout << std::setw(7) << std::fixed << std::setprecision(2) << bidIt->first
-                << " " << std::setw(7) << bidIt->second.getQuantity();
+            std::cout << GREEN_BG << WHITE_TEXT
+                << std::setw(7) << std::fixed << std::setprecision(2) << bidIt->first
+                << " " << std::setw(7) << bidIt->second.getQuantity()
+                << RESET;
             ++bidIt;
         }
 
         std::cout << std::endl;
     }
-}
 
+    std::cout << BOLD_TEXT << BLUE_TEXT << std::setw(width * 2) << std::setfill(' ') << " " << RESET << std::endl;
+}
 double Orderbook::getBestBid() const {
     return bids.empty() ? 0.0 : bids.begin()->first;
 }
